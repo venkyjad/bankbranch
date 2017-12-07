@@ -33,10 +33,11 @@
             <div class='col s3'>
               <div class="input-field col s12">
               <select id="select1">
-                <option value="BANGALORE">Bangalore</option>
+                <option value="BANGALORE" selected>Bangalore</option>
                 <option value="MUMBAI">Mumbai</option>
                 <option value="CHENNAI">Chennai</option>
                 <option value="DELHI">Delhi</option>
+                <option value="PUNE">Pune</option>
               </select>
               <label>Select Branch</label>
               </div>
@@ -50,9 +51,9 @@
             <div class='col s2'>
               <div class="input-field col s12">
               <select id="entries">
-                <option value=10>10</option>
+                <option value=10 selected>10</option>
                 <option value=30>30</option>
-                <option value=50 selected>50</option>
+                <option value=50 >50</option>
                 <option value=100>100</option>
               </select>
               <label>Show Entries</label>
@@ -60,7 +61,12 @@
             </div>
 
 
-            
+            <div class="col s4 btn-container">
+              <!-- <a class="btn blue"><i class="material-icons">navigate_before</i>&nbsp;Prev</a>
+              <a class="btn blue">Next&nbsp;<i class="material-icons">navigate_next</i></a> -->
+              <a class="waves-effect waves-light btn blue" data-offset="0" data-nav-type="prev" ng-click="navigate($event)" id="prev" disabled><i class="material-icons left">navigate_before</i>Prev</a>
+              <a class="waves-effect waves-light btn blue" data-offset="50" data-nav-type="next" ng-click="navigate($event)" id="next"><i class="material-icons right">navigate_next</i>Next</a>
+            </div>
 
             
 
@@ -79,7 +85,7 @@
               <table class="bordered highlight hidden" id="content">
                 <thead>
                   <tr>
-                      <th>#</th>
+                      
                       <th>Bank Name</th>
                       <th>Branch</th>
                       <th>Ifsc</th>
@@ -92,7 +98,7 @@
                 <tbody>
                  
                   <tr ng-repeat="item in branches | filter:search">
-                    <td>{{$index+1}} </td>
+                    
                     <td>{{item.bank_name}}</td>
                     <td>{{item.branch}}</td>
                     <td>{{item.ifsc}}</td>
