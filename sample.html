@@ -1,0 +1,107 @@
+<html>
+<title>Fyle:Task</title>
+<meta charset="utf-8"/>
+<head>
+  <!-- Angular CDN -->
+  
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" href="css/index.css">
+          
+</head>
+<body ng-app="myApp" ng-cloak>
+  <div layout="column" ng-controller="FilterController as filterCtrl" style="height: 100%;">
+    <div flex="76" flex-offset="13"  style="height: 100%;">
+      <md-content class="md-padding" layout-xs="column" layout="row" style="height: 100%;overflow: auto;">
+        <div flex-xs flex-gt-xs="100" layout="column" style="height:100%;">
+          <md-card md-theme="default" md-theme-watch style="height:100%;">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline" style="text-align: center">Bank Branches</span>
+                
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content style="height:100%;">
+
+              <div layout-gt-sm="row" flex-offset="13" flex="76">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>City</label>
+                  <md-select ng-model="currentCity" ng-change="changeInCity()">
+                  <md-option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Items Per Page</label>
+                  <md-select ng-model="itemsPerPage" ng-change="perPage()">
+                  <md-option value="10">10</md-option>
+                  <md-option value="30">30</md-option>
+                  <md-option value="50">50</md-option>
+                  <md-option value="100">100</md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Search</label>
+                  <input ng-model="search.branch">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm style="margin-top: 5px;">
+                  <md-button id="prev" class="md-raised md-primary" data-prev="0" ng-click="navPrev()" disabled>Prev</md-button>
+                  <md-button id="next" class="md-raised md-primary" data-next="10" ng-click="navNext()">Next</md-button>
+                </md-input-container>
+              </div>
+
+              <div class="spinner" ng-show="loader_flag">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+              
+              <div layout="row" style="height:calc(100% - 175px);overflow-y: auto;">
+
+              
+
+              <table class="bordered" style="width: 100%;display: table;" ng-hide="loader_flag">
+                <thead>
+                  <tr>
+                      <th>Bank Name</th>
+                      <th>Branch</th>
+                      <th>Ifsc</th>
+                      <th>Address</th>
+                      <th>City</th>
+                      <th>State</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in branches | filter:search">
+                    
+                    <td>{{item.bank_name}}</td>
+                    <td>{{item.branch}}</td>
+                    <td>{{item.ifsc}}</td>
+                    <td>{{item.address}}</td>
+                    <td>{{item.city}}</td>
+                    <td>{{item.state}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            </md-card-content>
+          </md-card>
+        </div>
+      </md-content>
+    </div>
+  </div>
+ 
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
