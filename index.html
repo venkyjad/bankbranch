@@ -3,76 +3,67 @@
 <meta charset="utf-8"/>
 <head>
   <!-- Angular CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-
+  <link rel="stylesheet" href="css/index.css">
           
 </head>
-<body ng-app="myApp" ng-cloak">
-  <div class="container">
+<body ng-app="myApp" ng-cloak>
+  <div layout="column" ng-controller="FilterController as filterCtrl" style="height: 100%;">
+    <div flex="76" flex-offset="13"  style="height: 100%;">
+      <md-content class="md-padding" layout-xs="column" layout="row" style="height: 100%;overflow: auto;">
+        <div flex-xs flex-gt-xs="100" layout="column" style="height:100%;">
+          <md-card md-theme="default" md-theme-watch style="height:100%;">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline" style="text-align: center">Bank Branches</span>
+                
+              </md-card-title-text>
+            </md-card-title>
+            <md-card-content style="height:100%;">
 
-    <div class="row"  ng-controller="FilterController as filterCtrl" style="height: 100%;">
-      <div class="col s12">
-        <div class="card" style="height: 90%;">
-          <div class="card-title">
-            Bank Branches
-          </div>
-
-          <div class="row input-action">
-            <div class='col s3'>
-              <div class="input-field col s12">
-             <md-input-container style="margin-right: 10px;">
-              <label>City</label>
-                <md-select ng-model="currentCity" ng-change="changeInCity()">
+              <div layout-gt-sm="row" flex-offset="13" flex="76">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>City</label>
+                  <md-select ng-model="currentCity" ng-change="changeInCity()">
                   <md-option ng-repeat="city in cities" value="{{city.id}}">{{city.name}}</md-option>
-              </md-select>
-            </md-input-container>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Items Per Page</label>
+                  <md-select ng-model="itemsPerPage" ng-change="perPage()">
+                  <md-option value="10">10</md-option>
+                  <md-option value="30">30</md-option>
+                  <md-option value="50">50</md-option>
+                  <md-option value="100">100</md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Search</label>
+                  <input ng-model="search.branch">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm style="margin-top: 5px;">
+                  <md-button id="prev" class="md-raised md-primary" data-prev="0" ng-click="navPrev()" disabled>Prev</md-button>
+                  <md-button id="next" class="md-raised md-primary" data-next="10" ng-click="navNext()">Next</md-button>
+                </md-input-container>
               </div>
-            </div>
 
-            <div class="input-field col s3">
-              <input id="icon_prefix" type="text" class="validate" ng-model="search.branch">
-              <label for="icon_prefix">Search</label>
-            </div>
-
-            <div class='col s2'>
-              <div class="input-field col s12">
-              <select id="entries">
-                <option value=10 selected>10</option>
-                <option value=30>30</option>
-                <option value=50 >50</option>
-                <option value=100>100</option>
-              </select>
-              <label>Show Entries</label>
-              </div>
-            </div>
-
-
-            <div class="col s4 btn-container">
-              <!-- <a class="btn blue"><i class="material-icons">navigate_before</i>&nbsp;Prev</a>
-              <a class="btn blue">Next&nbsp;<i class="material-icons">navigate_next</i></a> -->
-              <a class="waves-effect waves-light btn blue" data-offset="0" data-nav-type="prev" ng-click="navigate($event)" id="prev" disabled><i class="material-icons left">navigate_before</i>Prev</a>
-              <a class="waves-effect waves-light btn blue" data-offset="10" data-nav-type="next" ng-click="navigate($event)" id="next"><i class="material-icons right">navigate_next</i>Next</a>
-            </div>
-
-            
-
-          </div>
-
-          <div class="row" style="height: calc(100% - 145px);overflow-y: auto;overflow-x: hidden;">
-
-            <div class="col s12">
-
-              <div class="spinner" id="loader">
+              <div class="spinner" ng-show="loader_flag">
                 <div class="bounce1"></div>
                 <div class="bounce2"></div>
                 <div class="bounce3"></div>
               </div>
+              
+              <div layout="row" style="height:calc(100% - 175px);overflow-y: auto;">
 
-              <table class="bordered highlight hidden" id="content">
+              
+
+              <table class="bordered" style="width: 100%;display: table;" ng-hide="loader_flag">
                 <thead>
                   <tr>
-                      
                       <th>Bank Name</th>
                       <th>Branch</th>
                       <th>Ifsc</th>
@@ -81,9 +72,7 @@
                       <th>State</th>
                   </tr>
                 </thead>
-
                 <tbody>
-                 
                   <tr ng-repeat="item in branches | filter:search">
                     
                     <td>{{item.bank_name}}</td>
@@ -94,25 +83,18 @@
                     <td>{{item.state}}</td>
                   </tr>
 
-            
-
-
-
-                 
                 </tbody>
               </table>
-
             </div>
-          </div>
-          
+            </md-card-content>
+          </md-card>
         </div>
-      </div>
-
+      </md-content>
     </div>
-
   </div>
+ 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
